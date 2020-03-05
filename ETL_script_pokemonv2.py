@@ -37,6 +37,7 @@ def ETL(collection):
         # hier wordt de opgehaalde data omgezet in een json structuur
         pokemonattrjsonAPI = pokemonattrAPI.json()
 
+        #Deze onderstaande statements zorgen ervoor dat de attributen die niet nodig zijn worden verwijderd
         del pokemonattrjsonAPI["held_items"]
         del pokemonattrjsonAPI["abilities"]
         del pokemonattrjsonAPI["base_experience"]
