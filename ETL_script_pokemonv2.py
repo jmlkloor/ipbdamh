@@ -13,7 +13,6 @@ def databasegegevens():
     # hier wordt de collection teruggegeven zodat ik het verder in de code kan gebruiken
     return collection
 
-
 # Binnen deze functie wordt het ETL proces gehandeld
 def ETL(collection):
     # Deze variabele bevat de pokemon API
@@ -37,7 +36,14 @@ def ETL(collection):
         # hier wordt de opgehaalde data omgezet in een json structuur
         pokemonattrjsonAPI = pokemonattrAPI.json()
 
-        #Deze onderstaande statements zorgen ervoor dat de attributen die niet nodig zijn worden verwijderd
+        # Hier wordt de dictionary gemaakt die aan de lijst hieronder wordt toegevoegd
+        lijstdict = {"naam": pokemonAPIjson['results'][teller]['name'], "attr": pokemonattrjsonAPI}
+        # hier wordt de dictionary toegoegd aan de lijst
+        databaselist.append(lijstdict)
+        # hier wordt de teller met 1 verhoogd zodat de volgende pokemon kan worden toegevoegd
+        teller = teller + 1
+
+        # Deze onderstaande statements zorgen ervoor dat de attributen die niet nodig zijn worden verwijderd
         del pokemonattrjsonAPI["held_items"]
         del pokemonattrjsonAPI["abilities"]
         del pokemonattrjsonAPI["base_experience"]
@@ -51,13 +57,8 @@ def ETL(collection):
         del pokemonattrjsonAPI["sprites"]
         del pokemonattrjsonAPI["stats"]
         del pokemonattrjsonAPI["weight"]
+        del pokemonattrjsonAPI["order"]
 
-        # Hier wordt de dictionary gemaakt die aan de lijst hieronder wordt toegevoegd
-        lijstdict = {"naam": pokemonAPIjson['results'][teller]['name'], "attr": pokemonattrjsonAPI}
-        # hier wordt de dictionary toegoegd aan de lijst
-        databaselist.append(lijstdict)
-        # hier wordt de teller met 1 verhoogd zodat de volgende pokemon kan worden toegevoegd
-        teller = teller + 1
     # Hier wordt de data in de mongoDB geladen
     collection.insert_one({"data": databaselist})
 
