@@ -4,8 +4,8 @@ import requests
 # Binnen deze functie staan de database gegevens die nodig zijn
 def databasegegevens():
     # Hier wordt de database connectie gegevens opgeslagen in een variabelen
-    # client = MongoClient("mongodb+srv://jmlkloor:shira001@ipbdamh-xjb09.azure.mongodb.net/test?retryWrites=true&w=majority")
-    client = MongoClient("mongodb://localhost:27017/")
+    client = MongoClient("mongodb+srv://jmlkloor:shira001@ipbdamh-xjb09.azure.mongodb.net/test?retryWrites=true&w=majority")
+    #client = MongoClient("mongodb://localhost:27017/")
     # Hier wordt duidelijk gemaakt met welke database er connectie moet worden gemaakt
     db = client["API"]
     # Hier wordt duidelijk gemaakt met welke collectie er connectie moet worden gemaakt
