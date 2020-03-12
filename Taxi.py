@@ -1,9 +1,11 @@
 import pandas as pd
+import numpy as np
 from time import time
 import requests
 import shutil
 from pymongo import MongoClient
 import sys
+import gridfs
 
 begin = time()
 def callme():
@@ -19,23 +21,28 @@ def callme():
         print( "Success")
 
 def databaseschrijven():
-    data = pd.read_csv(r"C:\Users\Kevin\Desktop\Data\File1.csv",low_memory=False,nrows=100000)
+    data = pd.read_csv(r"C:\Users\Kevin\Desktop\Data\File1.csv",low_memory=False)
     client = MongoClient("mongodb://localhost:27017/")
-    # Hier wordt duidelijk gemaakt met welke database er connectie moet worden gemaakt
     db = client["API"]
-    # Hier wordt duidelijk gemaakt met welke collectie er connectie moet worden gemaakt
-    collection = db["APIcollection"]
     a = sys.getsizeof(data)
     a = a / 1000000
     print(round(a),"mb")
-    #datadict = data.to_dict('records')
-    #collection.insert_one({"Data" : datadict})
+    datacsv = data.to_csv()
+    fs = gridfs.GridFS(db)
+    fs.put(datacsv,encoding="utf-8")
+
+def test():
+    shepherd = "Mary"
+    age = 32
+    stuff_in_string = "Shepherd {} is {} years old.".format(shepherd, age)
+    print(stuff_in_string)
 
 if __name__ == '__main__':
     #callme()
-    databaseschrijven()
+    #databaseschrijven()
+    test()
 
 
 eind = time()
 tijd = (eind - begin)
-print(tijd)
+print(round(tijd),"seconden")
