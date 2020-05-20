@@ -9,12 +9,11 @@ import sys
 import gridfs
 import json
 
-begin = time()
-
 def inladen():
-    jaar = 9
+    begin = time()
+    jaar = 19
     jaartal = '%02d' % jaar
-    maand = 1
+    maand = 12
     maandtal = '%02d' % maand
 
     if os.path.exists(r"C:\Users\Kevin\Desktop\Data\Opslag2.txt"):
@@ -61,6 +60,7 @@ def inladen():
     else:
         while jaartal != "100":
             if maandtal == "12":
+                print("Het inladen van de data begint nu")
                 client = MongoClient("mongodb://localhost:27017/")
                 db = client["API"]
                 data = pd.read_csv(r"C:\Users\Kevin\Desktop\Data\File{}{}.csv".format(jaartal, maandtal),low_memory=False)
@@ -77,6 +77,7 @@ def inladen():
                 db = client["API"]
                 try:
                     data = pd.read_csv(r"C:\Users\Kevin\Desktop\Data\File{}{}.csv".format(jaartal, maandtal),low_memory=False)
+                    print("Het inladen van de data begint nu")
                     datacsv = data.to_csv()
                     fs = gridfs.GridFS(db)
                     fs.put(datacsv, encoding="UTF-8")
@@ -88,10 +89,16 @@ def inladen():
                     maken.write(str(jaar) + "\n")
                     maken.write(str(maand) + "\n")
                     maken.close()
+                    eind = time()
+                    tijd = (eind - begin)
+                    print(round(tijd), "seconden")
                     return
                 maand = maand + 1
                 maandtal = '%02d' % maand
                 print(jaartal, maandtal)
+    eind = time()
+    tijd = (eind - begin)
+    print(round(tijd), "seconden")
 
 def performancetest():
     print("Hoeveel megabyte wilt u inladen?")
@@ -108,25 +115,29 @@ def performancetest():
     fs.put(datacsv,encoding="UTF-8")
 
 def query():
-    client = MongoClient("mongodb://localhost:27017/")
-    db = client["API"]
-    fs = gridfs.GridFS(db)
+    begin = time()
+    print("het ophalen van de data begint")
 
-    test = fs.get(ObjectId("5e7c7a272bf6936e45713da7")).read()
+    data = pd.read_csv(r"C:\Users\Kevin\Desktop\Data\File1912.csv", low_memory=False)
+    pd.set_option('display.max_columns', None)
+    print(data.shape)
+    print(data.info())
+    print(data.head())
+    print(data.describe())
 
-    lol = test.decode()
+    #print(pd.crosstab(data['vendor_name'],['Payment_Type'], margins=True))
 
-    print(lol)
+    eind = time()
+    tijd = (eind - begin)
+    print(round(tijd), "seconden")
 
-    test3 = pd.DataFrame(lol)
-    print(test3)
-
-    print(pd)
 
 def bestanden():
-    jaar = 9
+    begin = time()
+
+    jaar = 19
     jaartal = '%02d' % jaar
-    maand = 1
+    maand = 12
     maandtal = '%02d' % maand
 
     if os.path.exists(r"C:\Users\Kevin\Desktop\Data\Opslag.txt"):
@@ -201,12 +212,16 @@ def bestanden():
                 maandtal = '%02d' % maand
                 print(jaartal, maandtal)
 
-if __name__ == '__main__':
-    #inladen()
-    #performancetest()
-    query()
-    #bestanden()
+    eind = time()
+    tijd = (eind - begin)
+    print(round(tijd), "seconden")
 
-eind = time()
-tijd = (eind - begin)
-print(round(tijd),"seconden")
+
+if __name__ == '__main__':
+    #bestanden()
+    inladen()
+
+    query()
+
+    #performancetest()
+
