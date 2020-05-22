@@ -19,6 +19,9 @@ train_df['Lowercase'] = train_df['text'].str.count(r'[a-z]')
 
 print(train_df.head(5))
 
+print(train_df['Uppercase'].sum())
+print(train_df['Lowercase'].sum())
+
 #lengte van de teksten
 train_df['Text_Lengt'] = train_df['text'].apply(len)
 
@@ -38,3 +41,9 @@ print(Dataframe1.head(5))
 #printen van gemiddelde text lengte van 0 dataframe en van 1 dataframe
 print("0:",Dataframe0['Text_Lengt'].mean())
 print("1:",Dataframe1['Text_Lengt'].mean())
+
+print("gem.upper.0:",Dataframe0['Uppercase'].sum())
+print("gem.lower.0:",Dataframe0['Lowercase'].sum())
+
+print("gem.upper.1:",Dataframe1['Uppercase'].sum())
+print("gem.lower.1:",Dataframe1['Lowercase'].sum())
