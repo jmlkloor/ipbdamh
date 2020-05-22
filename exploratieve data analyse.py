@@ -28,3 +28,13 @@ print(train_df['Text_Lengt'].max())
 #min van lengtetekst
 print(train_df['Text_Lengt'].min())
 
+#splitten van data in een dataframe voor 0 en voor 1
+Dataframe0 = train_df[train_df.target == 0]
+Dataframe1 = train_df[train_df.target == 1]
+
+print(Dataframe0.head(5))
+print(Dataframe1.head(5))
+
+#printen van gemiddelde text lengte van 0 dataframe en van 1 dataframe
+print("0:",Dataframe0['Text_Lengt'].mean())
+print("1:",Dataframe1['Text_Lengt'].mean())
