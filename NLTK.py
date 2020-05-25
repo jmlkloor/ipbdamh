@@ -70,17 +70,17 @@ print(NE_NER)
 new_tokens = nltk.pos_tag(word_tokenize(tekst))
 print(new_tokens)
 
-print([s for s in new_tokens if s[1] == 'NN' or s[1] == 'NNS' ])
+#print([s for s in new_tokens if s[1] == 'NN' or s[1] == 'NNS' ])
 
 new_tokens2 = nltk.pos_tag(word_tokenize(tekst2))
 print(new_tokens2)
 
-print([s for s in new_tokens2 if s[1] == 'NN'])
+#print([s for s in new_tokens2 if s[1] == 'NN'])
 
 
 
-#grammar_np = r"NP: {<DT>?<JJ>*<NN>}"
-#chunk_parser = nltk.RegexpParser(grammar_np)
-#chunk_result = chunk_parser.parse(new_tokens)
-#print(chunk_result)
+grammar_np = r"NP: {<DT>?<JJ>*<NN>}"
+chunk_parser = nltk.RegexpParser(grammar_np)
+chunk_result = chunk_parser.parse(new_tokens)
+print(chunk_result)
 
