@@ -9,7 +9,6 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.stem import WordNetLemmatizer
 import spacy
 
-
 nlp = spacy.load('en')
 stop = stopwords.words('english')
 
@@ -64,6 +63,7 @@ train_data['text'] = train_data['text'].apply(lambda x: word_pos_tagger(x))
 
 print(train_data.head())
 
-text = nlp("forest fire near la ronge sask canada")
+#text = nlp("forest fire near la ronge sask canada")
+text = nlp("deeds reason earthquake may allah forgive us")
 for chunk in text.noun_chunks:
     print(chunk.text, chunk.label_, chunk.root.text)
