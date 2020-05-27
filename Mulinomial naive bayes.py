@@ -1,14 +1,7 @@
 import pandas as pd
 import re
-import nltk.corpus
 from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer
-from nltk.tokenize import word_tokenize
-import nltk
-from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.stem import WordNetLemmatizer
 import spacy
-import numpy as np
 from sklearn import feature_extraction, linear_model, model_selection, preprocessing,svm,tree
 from sklearn.naive_bayes import GaussianNB,MultinomialNB,ComplementNB,BernoulliNB,CategoricalNB
 
@@ -45,10 +38,6 @@ print(train_vectors)
 #hier wordt onze test data omgezet naar vectors
 test_vectors = count_vectorizer.transform(test_df["text"])
 
-#hier halen wij al onze stopwoorden weg
-train_data['text'] = train_data['text'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
-
-clf = MultinomialNB()
+clf = MultinomialNB(alpha=1,fit_prior=True,class_prior=None)
 scores = model_selection.cross_val_score(clf, train_vectors, train_data["target"], cv=3, scoring="f1")
 print(scores)
-
